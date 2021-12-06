@@ -49,7 +49,6 @@ type ratingData struct {
 	allValues  []string
 	oneValues  []string
 	zeroValues []string
-	operation  string
 	index      int
 }
 
@@ -122,12 +121,10 @@ func Part2(values []string) int64 {
 	var co2Result ratingData
 
 	oxygenOperation := ratingData{
-		operation: "o2",
 		allValues: values,
 	}
 
 	co2Operation := ratingData{
-		operation: "co2",
 		allValues: values,
 	}
 
