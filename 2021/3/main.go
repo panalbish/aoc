@@ -52,7 +52,7 @@ type ratingData struct {
 	index      int
 }
 
-func oxygenGeneratorRating(data *ratingData) ratingData {
+func oxygenGeneratorRating(data *ratingData) {
 	data.oneValues = nil
 	data.zeroValues = nil
 
@@ -66,7 +66,7 @@ func oxygenGeneratorRating(data *ratingData) ratingData {
 	}
 
 	if len(data.allValues) == 1 {
-		return *data
+		return
 	}
 
 	if len(data.oneValues) > len(data.zeroValues) {
@@ -81,10 +81,10 @@ func oxygenGeneratorRating(data *ratingData) ratingData {
 		data.allValues = data.oneValues
 	}
 
-	return *data
+	return
 }
 
-func co2GeneratorRating(data *ratingData) ratingData {
+func co2GeneratorRating(data *ratingData) {
 	data.oneValues = nil
 	data.zeroValues = nil
 
@@ -98,7 +98,7 @@ func co2GeneratorRating(data *ratingData) ratingData {
 	}
 
 	if len(data.allValues) == 1 {
-		return *data
+		return
 	}
 
 	if len(data.oneValues) > len(data.zeroValues) {
@@ -112,14 +112,9 @@ func co2GeneratorRating(data *ratingData) ratingData {
 	if len(data.oneValues) == len(data.zeroValues) {
 		data.allValues = data.zeroValues
 	}
-
-	return *data
 }
 
 func Part2(values []string) int64 {
-	var oxygenResult ratingData
-	var co2Result ratingData
-
 	oxygenOperation := ratingData{
 		allValues: values,
 	}
@@ -132,16 +127,16 @@ func Part2(values []string) int64 {
 		oxygenOperation.index = key
 		co2Operation.index = key
 
-		oxygenResult = oxygenGeneratorRating(&oxygenOperation)
-		co2Result = co2GeneratorRating(&co2Operation)
+		oxygenGeneratorRating(&oxygenOperation)
+		co2GeneratorRating(&co2Operation)
 	}
 
-	oxygenResultDecimal, err := strconv.ParseInt(oxygenResult.allValues[0], 2, 64)
+	oxygenResultDecimal, err := strconv.ParseInt(oxygenOperation.allValues[0], 2, 64)
 	if err != nil {
 		panic(err)
 	}
 
-	co2ResultDecimal, err := strconv.ParseInt(co2Result.allValues[0], 2, 64)
+	co2ResultDecimal, err := strconv.ParseInt(co2Operation.allValues[0], 2, 64)
 	if err != nil {
 		panic(err)
 	}
